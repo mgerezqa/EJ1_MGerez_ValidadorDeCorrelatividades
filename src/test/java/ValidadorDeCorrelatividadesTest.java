@@ -1,7 +1,7 @@
 import domain.*;
 import org.junit.jupiter.api.*;
-
 import static org.junit.jupiter.api.Assertions.*;
+import java.util.List;
 
 public class ValidadorDeCorrelatividadesTest {
     private Materia sistemasYOrganizaciones;
@@ -29,7 +29,7 @@ public class ValidadorDeCorrelatividadesTest {
 
         disenioDeSistemas.agregarCorrelativa(paradigmasDeProgramacion);
         disenioDeSistemas.agregarCorrelativa(algoritmosYEstructuraDeDatos);
-        disenioDeSistemas.agregarCorrelativa(paradigmasDeProgramacion);
+        disenioDeSistemas.agregarCorrelativa(analisisDeSistemas);
 
         alumnoJuan = new Alumno("Juan", 1234);
 
@@ -54,21 +54,24 @@ public class ValidadorDeCorrelatividadesTest {
     public void validarInscripcionCorrecta(){
         alumnoJuan.agregarMateriaAprobada(algoritmosYEstructuraDeDatos);
         alumnoJuan.agregarMateriaAprobada(matematicaDiscreta);
-        inscripcion = new Inscripcion(alumnoJuan, paradigmasDeProgramacion);
+        List<Materia> listaDeMaterias = List.of(paradigmasDeProgramacion, sistemasYOrganizaciones);
+
+        inscripcion = new Inscripcion(alumnoJuan, listaDeMaterias);
 
         assertTrue(inscripcion.aprobada());
     }
 
-
-    @DisplayName("Inscripcion no aprobada por falta de correlatividades")
+    @DisplayName("Inscripción no aprobada por falta de correlatividades")
     @Test
     public void validarInscripcionFallida(){
         alumnoJuan.agregarMateriaAprobada(algoritmosYEstructuraDeDatos);
         alumnoJuan.agregarMateriaAprobada(matematicaDiscreta);
-        inscripcionFallida = new Inscripcion(alumnoJuan, disenioDeSistemas);
+        List<Materia> listaDeMaterias = List.of(paradigmasDeProgramacion, disenioDeSistemas);
+        inscripcionFallida = new Inscripcion(alumnoJuan, listaDeMaterias);
 
         assertFalse(inscripcionFallida.aprobada());
 
     }
+
 
 }

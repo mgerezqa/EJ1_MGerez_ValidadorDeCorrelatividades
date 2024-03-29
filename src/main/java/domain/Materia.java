@@ -11,7 +11,6 @@ public class Materia {
         this.nombre = nombre;
         this.correlativas = new ArrayList<>();
     }
-
     public void agregarCorrelativa(Materia materia) {
         correlativas.add(materia);
     }

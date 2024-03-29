@@ -1,25 +1,33 @@
 package domain;
 
+import java.util.List;
+
 public class Inscripcion {  // Inscripcion
     private final Alumno alumno;  // Alumno
-    private final Materia materia;  // Materia
+    private final List <Materia> materias;  // Materia
 
-    public Inscripcion(Alumno alumno, Materia materia) {  // Inscripcion
+    public Inscripcion(Alumno alumno, List <Materia> materiasAInscribirse) {  // Inscripcion
         this.alumno = alumno;  // Alumno
-        this.materia = materia;  // Materia
+        this.materias = materiasAInscribirse;  // Materia
     }
 
     public Alumno getAlumno() {  // Alumno
         return alumno;  // Alumno
     }
 
-    public Materia getMateria() {  // Materia
-        return materia;  // Materia
+    public List<Materia> getMaterias() {  // Materias
+        return materias;  // Materias
     }
 
+    //TODO
     public boolean aprobada() {
-//        return alumno.materiasAprobadas().containsAll(materia.getCorrelativas());
-            return materia.getCorrelativas().containsAll(alumno.materiasAprobadas());
+        for (Materia materia : materias) {
+            if (!alumno.cumpleConCorrelativa(materia)) {
+                return false;
+            }
+        }
+        return true;
     }
+
 
 }

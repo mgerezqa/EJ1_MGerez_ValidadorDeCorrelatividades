@@ -20,6 +20,10 @@ public class Alumno {
         return materiasAprobadas;
     }
 
+    public boolean cumpleConCorrelativa(Materia materia){
+        return materiasAprobadas.containsAll(materia.getCorrelativas());
+    }
+
     public String getNombre() {
         return nombre;
     }
