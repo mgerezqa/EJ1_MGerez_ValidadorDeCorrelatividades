@@ -20,4 +20,8 @@ public class Materia {
         return correlativas;
     }
 
+    public boolean esCorrelativa(Materia materia) {
+        return correlativas.contains(materia);
+    }
+
 }

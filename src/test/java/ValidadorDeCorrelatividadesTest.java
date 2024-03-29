@@ -1,29 +1,37 @@
 import domain.*;
 import org.junit.jupiter.api.*;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class ValidadorDeCorrelatividadesTest {
-    private Materia analisismatematicoI;
-    private Materia algebra;
+    private Materia sistemasYOrganizaciones;
     private Materia paradigmasDeProgramacion;
     private Materia matematicaDiscreta;
     private Materia algoritmosYEstructuraDeDatos;
     private Materia arquitecturaDeComputadoras;
-
-    private Alumno unAlumno;
+    private Materia analisisDeSistemas;
+    private Inscripcion inscripcion;
+    private Inscripcion inscripcionFallida;
+    private Alumno alumnoJuan;
+    private Materia disenioDeSistemas;
 
     @BeforeEach
     void setup(){
-        analisismatematicoI = new Materia(NombreMateria.ANALISIS_MATEMATICO);
-        algebra = new Materia(NombreMateria.ALGEBRA);
-        paradigmasDeProgramacion = new Materia(NombreMateria.PARADIGMAS_DE_PROGRAMACION);
+        analisisDeSistemas = new Materia(NombreMateria.ANALISIS_DE_SISTEMAS);
+        sistemasYOrganizaciones = new Materia(NombreMateria.SISTEMAS_Y_ORGANIZACIONES);
         algoritmosYEstructuraDeDatos = new Materia(NombreMateria.ALGORITMOS_Y_ESTRUCTURA_DE_DATOS);
         matematicaDiscreta = new Materia(NombreMateria.MATEMATICA_DISCRETA);
-        unAlumno = new Alumno("Juan", 1234);
+        paradigmasDeProgramacion = new Materia(NombreMateria.PARADIGMAS_DE_PROGRAMACION);
+        disenioDeSistemas = new Materia(NombreMateria.DISENO_DE_SISTEMAS);
 
+        paradigmasDeProgramacion.agregarCorrelativa(matematicaDiscreta);
+        paradigmasDeProgramacion.agregarCorrelativa(algoritmosYEstructuraDeDatos);
 
+        disenioDeSistemas.agregarCorrelativa(paradigmasDeProgramacion);
+        disenioDeSistemas.agregarCorrelativa(algoritmosYEstructuraDeDatos);
+        disenioDeSistemas.agregarCorrelativa(paradigmasDeProgramacion);
+
+        alumnoJuan = new Alumno("Juan", 1234);
 
     }
 
@@ -31,31 +39,36 @@ public class ValidadorDeCorrelatividadesTest {
     @Test
     public void validarMateriasDelIngreso() {
 
-        assertTrue(analisismatematicoI.getCorrelativas().isEmpty());
-        assertTrue(algebra.getCorrelativas().isEmpty());
-
+        assertTrue(sistemasYOrganizaciones.getCorrelativas().isEmpty());
     }
-
-
-    @DisplayName("Una materia troncal de 2do año tiene correlativas")
+    @DisplayName("Una materia de 2do año tiene correlativas")
     @Test
     public void validarMateriaDeSegundoAnio() {
-
-        paradigmasDeProgramacion.agregarCorrelativa(matematicaDiscreta);
-        paradigmasDeProgramacion.agregarCorrelativa(algoritmosYEstructuraDeDatos);
 
         assertTrue(paradigmasDeProgramacion.getCorrelativas().contains(matematicaDiscreta));
         assertTrue(paradigmasDeProgramacion.getCorrelativas().contains(algoritmosYEstructuraDeDatos));
     }
 
-    @DisplayName("Un alumno que aprobo dos materias troncales de 1er año puede inscribirse a una correlativa de 2do")
+    @DisplayName("Inscripción con materias aprobadas")
     @Test
-    public void validarMateriasAprobadas(){
-        unAlumno.agregarMateriaAprobada(algoritmosYEstructuraDeDatos);
-        unAlumno.agregarMateriaAprobada(matematicaDiscreta);
-        assertEquals(2, unAlumno.materiasAprobadas().size());
-        assertTrue(unAlumno.materiasAprobadas().contains(algoritmosYEstructuraDeDatos));
-        assertTrue(unAlumno.materiasAprobadas().contains(matematicaDiscreta));
+    public void validarInscripcionCorrecta(){
+        alumnoJuan.agregarMateriaAprobada(algoritmosYEstructuraDeDatos);
+        alumnoJuan.agregarMateriaAprobada(matematicaDiscreta);
+        inscripcion = new Inscripcion(alumnoJuan, paradigmasDeProgramacion);
+
+        assertTrue(inscripcion.aprobada());
+    }
+
+
+    @DisplayName("Inscripcion no aprobada por falta de correlatividades")
+    @Test
+    public void validarInscripcionFallida(){
+        alumnoJuan.agregarMateriaAprobada(algoritmosYEstructuraDeDatos);
+        alumnoJuan.agregarMateriaAprobada(matematicaDiscreta);
+        inscripcionFallida = new Inscripcion(alumnoJuan, disenioDeSistemas);
+
+        assertFalse(inscripcionFallida.aprobada());
+
     }
 
 }

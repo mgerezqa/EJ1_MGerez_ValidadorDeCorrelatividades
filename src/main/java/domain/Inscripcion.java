@@ -17,7 +17,9 @@ public class Inscripcion {  // Inscripcion
         return materia;  // Materia
     }
 
-    public boolean aprobada(){
-        return  true;
+    public boolean aprobada() {
+//        return alumno.materiasAprobadas().containsAll(materia.getCorrelativas());
+            return materia.getCorrelativas().containsAll(alumno.materiasAprobadas());
     }
+
 }
