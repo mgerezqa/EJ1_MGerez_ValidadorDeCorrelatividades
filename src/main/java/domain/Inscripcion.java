@@ -6,11 +6,10 @@ public class Inscripcion {  // Inscripcion
     private final Alumno alumno;  // Alumno
     private final List <Materia> materias;  // Materia
 
-    public Inscripcion(Alumno alumno, List <Materia> materiasAInscribirse) {  // Inscripcion
+    public Inscripcion(Alumno alumno, List <Materia> materiasAInscribirse) {
         this.alumno = alumno;  // Alumno
         this.materias = materiasAInscribirse;  // Materia
     }
-
     public Alumno getAlumno() {  // Alumno
         return alumno;  // Alumno
     }
@@ -19,14 +18,9 @@ public class Inscripcion {  // Inscripcion
         return materias;  // Materias
     }
 
-    //TODO
     public boolean aprobada() {
-        for (Materia materia : materias) {
-            if (!alumno.cumpleConCorrelativa(materia)) {
-                return false;
-            }
-        }
-        return true;
+        return materias.stream().allMatch(materia -> alumno.cumpleConCorrelativa(materia));
+
     }
 
 

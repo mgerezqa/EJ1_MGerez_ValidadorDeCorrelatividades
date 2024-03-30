@@ -1,47 +1,42 @@
 @startuml
+class Alumno {
+    - nombre: String
+    - legajo: int
+    - materiasAprobadas: List<Materia>
+    + agregarMateriaAprobada(materia: Materia): void
+    + materiasAprobadas(): List<Materia>
+    + cumpleCorrelativa(Materia materia): boolean
 
-package domain {
-    class Alumno {
-        - nombre: String
-        - legajo: int
-        - materiasAprobadas: List<Materia>
-        + Alumno(nombre: String, legajo: int)
-        + agregarMateriaAprobada(materia: Materia): void
-        + materiasAprobadas(): List<Materia>
-        + getNombre(): String
-        + getLegajo(): int
-    }
-
-    class Inscripcion {
-        - alumno: Alumno
-        - materia: Materia
-        + Inscripcion(alumno: Alumno, materia: Materia)
-        + getAlumno(): Alumno
-        + getMateria(): Materia
-        + aprobada(): boolean
-    }
-
-    class Materia {
-        - nombre: NombreMateria
-        - correlativas: List<Materia>
-        + Materia(nombre: NombreMateria)
-        + agregarCorrelativa(materia: Materia): void
-        + getCorrelativas(): List<Materia>
-        + esCorrelativa(materia: Materia): boolean
-    }
-
-    enum NombreMateria {
-        NINGUNA, ALGORITMOS_Y_ESTRUCTURA_DE_DATOS, ALGEBRA, ANALISIS_MATEMATICO, QUIMICA, INGENIERIA_Y_SOCIEDAD, ARQUITECTURA_DE_COMPUTADORAS, MATEMATICA_DISCRETA,
-        SISTEMAS_DE_REPRESENTACION, FISICA_I, SISTEMAS_Y_ORGANIZACIONES, ANALISIS_DE_SISTEMAS, ANALISIS_MATEMATICO_II, PROBABILIDAD_Y_ESTADISTICA,
-        PARADIGMAS_DE_PROGRAMACION, GESTION_DE_DATOS, DISENO_DE_SISTEMAS, SISTEMAS_OPERATIVOS, MATEMATICA_SUPERIOR, INGLES_I, FISICA_II,
-        ADMNISTRACION_DE_RECURSOS, INVESTIGACION_OPERATIVA, INGENIERIA_DE_SOFTWARE, LEGISLACION, COMUNICACIONES, REDES_DE_INFORMACION, TEORIA_DE_CONTROL,
-        INTELIGENCIA_ARTIFICIAL, PROYECTO_FINAL, ADMINISTRACION_GERENCIAL, SISTEMAS_DE_GESTION
-    }
-
-    Alumno "1" --> "1..*" Materia
-    Inscripcion "1" --> "1" Alumno
-    Inscripcion "1" --> "1" Materia
-    Materia "0..*" --> "0..*" Materia
 }
 
+class Inscripcion {
+    - alumno: Alumno
+    - materias: List <Materia>
+    + aprobada(): boolean
+}
+
+class Materia {
+    - nombre: NombreMateria
+    - correlativas: List<Materia>
+    + agregarCorrelativa(materia: Materia): void
+    + esCorrelativa(materia: Materia): boolean
+}
+
+enum NombreMateria {
+    NINGUNA, ALGORITMOS_Y_ESTRUCTURA_DE_DATOS, ALGEBRA, ANALISIS_MATEMATICO, QUIMICA, INGENIERIA_Y_SOCIEDAD, ARQUITECTURA_DE_COMPUTADORAS, MATEMATICA_DISCRETA,
+    SISTEMAS_DE_REPRESENTACION, FISICA_I, SISTEMAS_Y_ORGANIZACIONES, ANALISIS_DE_SISTEMAS, ANALISIS_MATEMATICO_II, PROBABILIDAD_Y_ESTADISTICA,
+    PARADIGMAS_DE_PROGRAMACION, GESTION_DE_DATOS, DISENO_DE_SISTEMAS, SISTEMAS_OPERATIVOS, MATEMATICA_SUPERIOR, INGLES_I, FISICA_II,
+    ADMNISTRACION_DE_RECURSOS, INVESTIGACION_OPERATIVA, INGENIERIA_DE_SOFTWARE, LEGISLACION, COMUNICACIONES, REDES_DE_INFORMACION, TEORIA_DE_CONTROL,
+    INTELIGENCIA_ARTIFICIAL, PROYECTO_FINAL, ADMINISTRACION_GERENCIAL, SISTEMAS_DE_GESTION
+}
+
+Alumno "1" --> "1...*" Materia
+Inscripcion "1" --> "1" Alumno
+Inscripcion "1" --> "1...*" Materia
+Materia "0...*" --> "0...*" Materia
+Materia --> NombreMateria
+
+
 @enduml
+
+

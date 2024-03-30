@@ -49,7 +49,7 @@ public class ValidadorDeCorrelatividadesTest {
         assertTrue(paradigmasDeProgramacion.getCorrelativas().contains(algoritmosYEstructuraDeDatos));
     }
 
-    @DisplayName("Inscripción con materias aprobadas")
+    @DisplayName("Inscripción aprobada con correlativas controladas")
     @Test
     public void validarInscripcionCorrecta(){
         alumnoJuan.agregarMateriaAprobada(algoritmosYEstructuraDeDatos);
